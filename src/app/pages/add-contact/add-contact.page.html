@@ -1,0 +1,20 @@
+<!-- add-contact.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Agregar Contacto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="name" type="text"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Teléfono</ion-label>
+    <ion-input [(ngModel)]="phone" type="text"></ion-input>
+  </ion-item>
+
+  <ion-button expand="full" (click)="onSubmit()">Agregar Contacto</ion-button>
+</ion-content>
