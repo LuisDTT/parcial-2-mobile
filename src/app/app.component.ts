@@ -12,20 +12,12 @@ import { ExternalApiService } from './core/services/external-api.service';
   standalone: false,
 })
 export class AppComponent {
-  constructor(
-    private platform: Platform,
-    private pushService: PushService,
-    private externalApiService: ExternalApiService,
-  ) {
-    this.platform.ready().then(() => {
-      this.pushService.initPush();
-    });
-  }
+  constructor(private externalApiService: ExternalApiService) {}
 
   ngOnInit() {
     // ⚠️ Puedes usar valores fijos para pruebas
-    const email = 'luis.torrestomala@unicolombo.edu.co';
-    const password = 'parcial';
+    const email = 'luis.torrestomala2@unicolombo.edu.co';
+    const password = '123456789';
 
     this.externalApiService.loginToExternalApi(email, password);
   }

@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Chat</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="startCall(contactId)">
+        <ion-icon name="call-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item
+      *ngFor="let msg of messages"
+      [class.own]="msg.from === currentUserId">
+
+      <ion-label>
+        <!-- Mensaje de texto -->
+        <div *ngIf="msg.type === 'text'">
+          {{ msg.text }}
+        </div>
+
+        <!-- Mensaje de audio -->
+        <div *ngIf="msg.type === 'audio'">
+          <audio controls [src]="msg.url"></audio>
+        </div>
+
+        <!-- Mensaje de archivo -->
+        <div *ngIf="msg.type === 'file'">
+          <p>{{ msg.fileName }}</p>
+          <a [href]="msg.url" download target="_blank">📎 Descargar archivo</a>
+        </div>
+
+        <!-- Mensaje de Video -->
+        <div *ngIf="msg.type === 'video'">
+            <video [src]="msg.url" controls style="max-width: 250px;"></video>
+        </div>
+
+        <ion-item *ngIf="msg.type === 'image'">
+
+            <ion-img [src]="msg.url" alt="Imagen enviada" style="max-width: 100%; border-radius: 8px;"></ion-img>
+        </ion-item>
+
+        <div *ngIf="msg.type === 'location'" 
+         [id]="'map-' + msg.id" 
+         class="map-container" 
+         #mapContainer 
+         style="width: 100%; height: 200px;">
+        </div>
+
+
+      </ion-label>
+  
+    </ion-item>
+  </ion-list>
+ 
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="chat-footer-toolbar" style="display: flex; flex-direction: column; padding: 8px;">
+
+    <!-- Input de mensaje arriba -->
+    <ion-item lines="none" class="chat-footer-item" style="width: 100%;">
+      <ion-input
+        [(ngModel)]="newMessage"
+        placeholder="Escribe un mensaje"
+        type="text"
+        class="input-message"
+        style="flex: 1;"
+      ></ion-input>
+    </ion-item>
+
+    <!-- Botones debajo -->
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 8px;">
+      <ion-button fill="clear" (click)="selectFile()">
+        <ion-icon name="attach" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        fill="clear"
+        (touchstart)="startRecording()"
+        (touchend)="stopRecording()"
+        (mousedown)="startRecording()"
+        (mouseup)="stopRecording()"
+        (mouseleave)="stopRecording()"
+        [class.recording]="isRecording"
+      >
+        <ion-icon name="mic" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="sendMessage()">
+        <ion-icon name="send" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-button *ngIf="!isRecording" (click)="startVideoRecording()">
+        <ion-icon name="videocam"></ion-icon>
+      </ion-button>
+
+      <ion-button color="danger" *ngIf="isRecording" (click)="stopVideoRecording()">
+        <ion-icon name="stop"></ion-icon>
+      </ion-button>
+      <ion-button (click)="takePhotoAndSend()">
+        <ion-icon name="camera"></ion-icon>
+        Foto
+      </ion-button>
+      <ion-button (click)="sendLocationMessage()">
+  <ion-icon name="locate"></ion-icon>
+  Enviar Ubicación
+</ion-button>
+    </div>
+
+
+    <!-- Input file oculto -->
+    <input type="file" hidden #fileInput (change)="onFileSelected($event)" />
+  </ion-toolbar>
+</ion-footer>
+

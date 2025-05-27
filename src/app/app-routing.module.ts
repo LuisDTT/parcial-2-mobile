@@ -33,6 +33,18 @@ const routes: Routes = [
         (m) => m.AddContactPageModule,
       ),
   },
+  {
+    path: 'video-call/:meetingId',
+    loadChildren: () =>
+      import('./pages/video-call/video-call.module').then(
+        (m) => m.VideoCallPageModule,
+      ),
+  },
+  {
+    path: 'chat/:contactId',
+    loadChildren: () =>
+      import('./pages/chat/chat.module').then((m) => m.ChatPageModule),
+  },
 ];
 
 @NgModule({

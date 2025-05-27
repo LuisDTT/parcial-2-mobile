@@ -9,6 +9,7 @@ import {
   addDoc,
   doc,
   setDoc,
+  getDoc,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Observable, from } from 'rxjs';
@@ -61,7 +62,7 @@ export class ContactsService {
     return false;
   }
 
-  async addContact(phone: string) {
+  async addContact(phone: string, contactName: string) {
     const contactosRef = collection(this.firestore, 'users');
     const q = query(contactosRef, where('phone', '==', phone));
 
@@ -80,7 +81,7 @@ export class ContactsService {
         );
 
         await setDoc(contactRef, {
-          name: userEncontrado.data()['firstName'],
+          name: contactName,
           phone: userEncontrado.data()['phone'],
           userId: userEncontrado.id,
         });
@@ -102,6 +103,16 @@ export class ContactsService {
         'Contacto no encontrado',
         'No existe un usuario con ese número de teléfono.',
       );
+    }
+  }
+
+  async getUserData(uid: string): Promise<any> {
+    const userRef = doc(this.firestore, `users/${uid}`);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+      return userSnap.data();
+    } else {
+      return null;
     }
   }
 

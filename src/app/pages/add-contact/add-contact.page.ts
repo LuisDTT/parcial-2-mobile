@@ -22,8 +22,8 @@ export class AddContactPage {
 
   async onSubmit() {
     if (this.phone) {
-      await this.contactsService.addContact(this.phone);
-      this.navCtrl.navigateRoot('/login');
+      await this.contactsService.addContact(this.phone, this.name);
+      this.navCtrl.navigateRoot('/home');
     }
   }
 }

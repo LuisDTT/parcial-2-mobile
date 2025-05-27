@@ -23,11 +23,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (isExternalApi) {
       const externalToken = localStorage.getItem('externalApiToken');
+      console.log(externalToken);
       if (externalToken) {
-        console.log('interceptando');
         const cloned = req.clone({
           setHeaders: {
-            Authorization: `Bearer ${externalToken}`,
+            Authorization: `${externalToken}`,
           },
         });
         return next.handle(cloned);

@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>video-call</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <iframe
+    [src]="jitsiUrl"
+    width="100%"
+    height="100%"
+    allow="camera; microphone; fullscreen"
+    style="border:0"
+  ></iframe>
+</ion-content>
